@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+void main() async {
+  await Hive.openBox("wordOfTheDay");
+  final box = Hive.box("wordOfTheDat");
+
+  final wordOfTheDay = box.get("word");
+  print(wordOfTheDay);
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

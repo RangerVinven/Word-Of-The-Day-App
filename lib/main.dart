@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:word_of_the_day/FlashcardsPage.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'FlashcardsPage.dart';
 import 'HomePage.dart';
 
 // https://random-words-api.vercel.app/word
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
   runApp(const MyApp());
 }
 
@@ -18,7 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
     
   var navbarIndex = 0;
-  var pages = [HomePage(), FlashcardsPage()];
+  var pages = const [HomePage(), FlashcardsPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class _MyAppState extends State<MyApp> {
               navbarIndex = newIndex;
             });
           },
-          destinations: [
+          destinations: const [
             NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Word of The Day"),
             NavigationDestination(icon: Icon(Icons.rectangle_outlined), selectedIcon: Icon(Icons.rectangle), label: "Flashcards"),
           ],
