@@ -33,14 +33,14 @@ class HomePage extends StatelessWidget {
                 minHeight: 65,
               ),
               width: 350,
-              color: Colors.orangeAccent,
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
                     "Membral",
                     style: TextStyle(
-                      color: Colors.white,
+
                       fontSize: 30,
                       fontWeight: FontWeight.bold
                     ),
@@ -49,9 +49,8 @@ class HomePage extends StatelessWidget {
                   Text(
                     "Of, like or pertaining to the limbs rather than the trunk",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500
                     ),
                   )
                 ],
