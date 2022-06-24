@@ -16,9 +16,18 @@ class HomePage extends StatelessWidget {
           title: const Text("Word Of The Day"),
           backgroundColor: Colors.orange,
         ),
-        body: Center(
-          child: const Text("fgh")
-        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: double.infinity, height: 50),
+            Container(
+              color: Colors.orangeAccent,
+              height: 200,
+              width: 350,
+              child: const Text("fgh")
+            )
+          ],
+        )
       ),
     );
   }
