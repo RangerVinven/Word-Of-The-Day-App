@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// https://random-words-api.vercel.app/word
 
 void main() {
   runApp(const HomePage());
@@ -13,16 +14,23 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Word Of The Day"),
+          title: const Text(
+            "Word Of The Day",
+            style: TextStyle(
+              fontSize: 28
+            ),
+          ),
           backgroundColor: Colors.orange,
+          elevation: 0,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(width: double.infinity, height: 50),
+            const SizedBox(width: double.infinity),
             Container(
-              constraints: BoxConstraints(
-                minHeight: 100,
+              constraints: const BoxConstraints(
+                minHeight: 65,
               ),
               width: 350,
               color: Colors.orangeAccent,
@@ -30,16 +38,16 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "Praxeologies",
+                    "Membral",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
                       fontWeight: FontWeight.bold
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 6),
                   Text(
-                    "The study of human action and conduct",
+                    "Of, like or pertaining to the limbs rather than the trunk",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -50,7 +58,13 @@ class HomePage extends StatelessWidget {
               )
             ),
           ],
-        )
+        ),
+        bottomNavigationBar: NavigationBar(
+          destinations: [
+            NavigationDestination(icon: Icon(Icons.home), label: "Word of The Day"),
+            NavigationDestination(icon: Icon(Icons.rectangle_outlined), label: "Flashcards"),
+          ],
+        ),
       ),
     );
   }
