@@ -12,6 +12,6 @@ class FlashcardsPage extends StatefulWidget {
 class _FlashcardsPageState extends State<FlashcardsPage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Flashcards")
+    return Text("Flashcards");
   }
 }

@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:word_of_the_day/FlashcardsPage.dart';
+import 'HomePage.dart';
+
 // https://random-words-api.vercel.app/word
 
 void main() {
-  runApp(const HomePage());
+  runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+    
+  var navbarIndex = 0;
+  var pages = [HomePage(), FlashcardsPage()];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,48 +34,20 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.orange,
           elevation: 0,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: double.infinity),
-            Container(
-              constraints: const BoxConstraints(
-                minHeight: 65,
-              ),
-              width: 350,
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "Membral",
-                    style: TextStyle(
-
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  Text(
-                    "Of, like or pertaining to the limbs rather than the trunk",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500
-                    ),
-                  )
-                ],
-              )
-            ),
-          ],
-        ),
+        body: pages[navbarIndex],
         bottomNavigationBar: NavigationBar(
+          selectedIndex: navbarIndex,
+          onDestinationSelected: (newIndex) {
+            setState(() {
+              navbarIndex = newIndex;
+            });
+          },
           destinations: [
-            NavigationDestination(icon: Icon(Icons.home), label: "Word of The Day"),
-            NavigationDestination(icon: Icon(Icons.rectangle_outlined), label: "Flashcards"),
+            NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: "Word of The Day"),
+            NavigationDestination(icon: Icon(Icons.rectangle_outlined), selectedIcon: Icon(Icons.rectangle), label: "Flashcards"),
           ],
         ),
-      ),
+      )
     );
   }
 }
