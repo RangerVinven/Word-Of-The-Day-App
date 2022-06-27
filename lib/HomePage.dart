@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> {
     HttpOverrides.global = MyHttpOverrides();
 
     // Checks if the word is saved, if not, then gets a new word
-    wotdService.clearBox();
     if(wotdService.wordSaved()) {
       wordOfTheDay = wotdService.getWordAndMeaning();
       loading = false;
@@ -48,13 +47,15 @@ class _HomePageState extends State<HomePage> {
   // Makes the API call to https://random-words-api.vercel.app/word to get a word
   Future<void> getNewWord() async {
     var response = await get(Uri.parse("https://random-words-api.vercel.app/word"));
+    List<dynamic> responseList = jsonDecode(response.body);
 
-    String json = response.body.replaceAll("\n", "");
-    Word newWord = Word.fromJSON(jsonDecode(json));
+    Word newWord = Word(word: responseList[0]["word"], meaning: responseList[0]["definition"]);
 
     wordOfTheDay = newWord;
     wotdService.updateWord(newWord); // Updates the word in the database to make it persistant
-    loading = false;
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
