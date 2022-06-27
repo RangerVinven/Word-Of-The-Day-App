@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:word_of_the_day/models/Word.dart';
 
 import 'FlashcardsPage.dart';
 import 'HomePage.dart';
 
 // https://random-words-api.vercel.app/word
 
+late Box box;
+
 void main() async {
   await Hive.initFlutter();
+  Box box = await Hive.openBox("Word");
+  Hive.registerAdapter(WordAdapter());
 
   runApp(const MyApp());
 }
