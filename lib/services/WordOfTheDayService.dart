@@ -10,16 +10,16 @@ class WordOfTheDayService {
     wordBox = Hive.box("wordBox");
   }
 
-  void addWordAndMeaning(String word, String meaning) {
-    wordBox.put("word", Word(word: word, meaning: meaning));
+  void addWordAndMeaning(Word word) {
+    wordBox.put("word", word);
   }
 
-  void updateWord(String word, String meaning) {
+  void updateWord(Word word) {
     // Clears the box if there's too many words, then adds a new one
     if(wordBox.length > 1) {
       clearBox(); 
     }
-    addWordAndMeaning(word, meaning);
+    addWordAndMeaning(word);
   }
 
   bool wordSaved() {

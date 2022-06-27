@@ -1,9 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart';
 
 import 'package:word_of_the_day/models/Word.dart';
 import 'package:word_of_the_day/services/WordOfTheDayService.dart';
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,21 +28,38 @@ class _HomePageState extends State<HomePage> {
 
   late WordOfTheDayService wotdService;
   late Word wordOfTheDay;
+  late bool loading;
 
   _HomePageState() {
     wotdService = WordOfTheDayService();
+    HttpOverrides.global = MyHttpOverrides();
 
+    // Checks if the word is saved, if not, then gets a new word
+    wotdService.clearBox();
     if(wotdService.wordSaved()) {
-      wotdService.updateWord("Word not saved", "fdsa");
+      wordOfTheDay = wotdService.getWordAndMeaning();
+      loading = false;
     } else {
-      wotdService.updateWord("Ragmatical", "Wild; ill-behaved");
+      loading = true;
+      getNewWord();
     }
-    wordOfTheDay = wotdService.getWordAndMeaning();
+  }
+
+  // Makes the API call to https://random-words-api.vercel.app/word to get a word
+  Future<void> getNewWord() async {
+    var response = await get(Uri.parse("https://random-words-api.vercel.app/word"));
+
+    String json = response.body.replaceAll("\n", "");
+    Word newWord = Word.fromJSON(jsonDecode(json));
+
+    wordOfTheDay = newWord;
+    wotdService.updateWord(newWord); // Updates the word in the database to make it persistant
+    loading = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return loading ? const LoadingPage() : Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -65,5 +94,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         );
+  }
+}
+
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: const Text("Loading"),
+    );
   }
 }
