@@ -20,11 +20,8 @@ class _HomePageState extends State<HomePage> {
   _HomePageState() {
     wotdService = WordOfTheDayService();
 
-    wotdService.addWordAndMeaning("Membral", "Of, like or pertaining to the limbs rather than the trunk");
+    wotdService.addWordAndMeaning("Grysbok", "Small speckled south African antelope");
     wordOfTheDay = wotdService.getWordAndMeaning();
-
-    print(wordOfTheDay.word);
-    print(wordOfTheDay.meaning);
   }
 
   @override
@@ -42,9 +39,9 @@ class _HomePageState extends State<HomePage> {
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    "Membral",
+                    wordOfTheDay.word,
                     style: TextStyle(
 
                       fontSize: 30,
@@ -53,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 6),
                   Text(
-                    "Of, like or pertaining to the limbs rather than the trunk",
+                    wordOfTheDay.meaning,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500

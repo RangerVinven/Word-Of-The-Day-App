@@ -19,4 +19,13 @@ class WordOfTheDayService {
     return word;
   }
 
+  bool clearBox() {
+    try {
+      wordBox.clear();
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
 }
