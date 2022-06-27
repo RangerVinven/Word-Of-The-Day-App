@@ -11,11 +11,23 @@ class WordOfTheDayService {
   }
 
   void addWordAndMeaning(String word, String meaning) {
-    wordBox.add(Word(word: word, meaning: meaning));
+    wordBox.put("word", Word(word: word, meaning: meaning));
+  }
+
+  void updateWord(String word, String meaning) {
+    // Clears the box if there's too many words, then adds a new one
+    if(wordBox.length > 1) {
+      clearBox(); 
+    }
+    addWordAndMeaning(word, meaning);
+  }
+
+  bool wordSaved() {
+    return wordBox.length == 1 ? true : false;
   }
 
   Word getWordAndMeaning() {
-    var word = wordBox.getAt(0);
+    var word = wordBox.get("word");
     return word;
   }
 

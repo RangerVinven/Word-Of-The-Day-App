@@ -20,7 +20,11 @@ class _HomePageState extends State<HomePage> {
   _HomePageState() {
     wotdService = WordOfTheDayService();
 
-    wotdService.addWordAndMeaning("Grysbok", "Small speckled south African antelope");
+    if(wotdService.wordSaved()) {
+      wotdService.updateWord("Word not saved", "fdsa");
+    } else {
+      wotdService.updateWord("Ragmatical", "Wild; ill-behaved");
+    }
     wordOfTheDay = wotdService.getWordAndMeaning();
   }
 

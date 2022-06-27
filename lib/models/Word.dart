@@ -4,10 +4,10 @@ part 'Word.g.dart';
 
 @HiveType(typeId : 1)
 class Word {
-  @HiveField(0)
+  @HiveField(1)
   String word;
 
-  @HiveField(1)
+  @HiveField(2)
   String meaning;
 
   Word({required this.word, required this.meaning});
