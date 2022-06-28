@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Word.dart';
+part of 'Flashcard.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class WordAdapter extends TypeAdapter<Word> {
+class FlashcardAdapter extends TypeAdapter<Flashcard> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  Word read(BinaryReader reader) {
+  Flashcard read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Word(
+    return Flashcard(
       word: fields[1] as String,
       meaning: fields[2] as String,
+      dateToReview: fields[3] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Word obj) {
+  void write(BinaryWriter writer, Flashcard obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(1)
       ..write(obj.word)
       ..writeByte(2)
-      ..write(obj.meaning);
+      ..write(obj.meaning)
+      ..writeByte(3)
+      ..write(obj.dateToReview);
   }
 
   @override
@@ -38,7 +41,7 @@ class WordAdapter extends TypeAdapter<Word> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is WordAdapter &&
+      other is FlashcardAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

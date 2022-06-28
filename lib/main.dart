@@ -28,7 +28,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
     
-  var navbarIndex = 0;
+  var navbarIndex = 0; // For which page the user's on (0 - Home, 1 - Flashcards)
   var pages = const [HomePage(), FlashcardsPage()];
 
   @override
