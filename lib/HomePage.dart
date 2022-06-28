@@ -77,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     wordOfTheDay.word,
                     style: TextStyle(
-
                       fontSize: 30,
                       fontWeight: FontWeight.bold
                     ),
