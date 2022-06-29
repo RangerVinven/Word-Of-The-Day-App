@@ -17,21 +17,18 @@ class FlashcardAdapter extends TypeAdapter<Flashcard> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Flashcard(
-      word: fields[1] as String,
-      meaning: fields[2] as String,
-      dateToReview: fields[3] as DateTime,
+      word: fields[1] as Word,
+      dateToReview: fields[2] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Flashcard obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(1)
       ..write(obj.word)
       ..writeByte(2)
-      ..write(obj.meaning)
-      ..writeByte(3)
       ..write(obj.dateToReview);
   }
 
