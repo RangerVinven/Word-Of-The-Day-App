@@ -12,5 +12,7 @@ class Flashcard {
   @HiveField(3)
   DateTime dateToReview;
 
-  Flashcard({required this.word, required this.meaning, required this.dateToReview});
+  bool wordShowing;
+
+  Flashcard({required this.word, required this.meaning, required this.dateToReview, required this.wordShowing});
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import 'package:word_of_the_day/widgets/FlashcardWidget.dart';
+import 'package:word_of_the_day/models/Flashcard.dart';
 
 class FlashcardsPage extends StatefulWidget {
   const FlashcardsPage({Key? key}) : super(key: key);
@@ -10,6 +11,9 @@ class FlashcardsPage extends StatefulWidget {
 }
 
 class _FlashcardsPageState extends State<FlashcardsPage> {
+
+  bool isWordCurrentlyShown = true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -17,32 +21,13 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
         child: Column(
           children: [
             TextButton(
-              onPressed: () {},
-              child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 2.25
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-              ),
-              width: 300,
-              height: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Paronomasia",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
-                ],
-              )
-            ),
+              onPressed: () {
+                // Changes the text on the flashcard to the opposite when pressed (word -> meaning and vise versa)
+                setState(() {
+                  isWordCurrentlyShown = !isWordCurrentlyShown;
+                });
+              },
+              child: FlashcardWidget(flashcard: Flashcard(word: "Paraonomasia", meaning: "Play on words; punning", dateToReview: DateTime.now(), wordShowing: isWordCurrentlyShown))
             ),
             SizedBox(height: 10),
             Row(
