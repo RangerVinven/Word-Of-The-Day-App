@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:word_of_the_day/models/Flashcard.dart';
 
 import 'package:word_of_the_day/models/Word.dart';
 
@@ -13,8 +14,12 @@ late Box box;
 
 void main() async {
   await Hive.initFlutter();
+  
   Hive.registerAdapter(WordAdapter());
+  Hive.registerAdapter(FlashcardAdapter());
+
   await Hive.openBox("wordBox");
+  await Hive.openBox("flashcardBox");
 
   runApp(const MyApp());
 }

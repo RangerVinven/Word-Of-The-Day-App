@@ -34,6 +34,8 @@ class FlashcardService {
 
         flashcardBox.deleteAt(i);
         print(flashcard.word.word);
+
+        return;
       }
     }
   }
