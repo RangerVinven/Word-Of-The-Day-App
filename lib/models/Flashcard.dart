@@ -4,13 +4,13 @@ part 'Flashcard.g.dart';
 
 @HiveType(typeId: 2)
 class Flashcard {
-  @HiveField(1)
+  @HiveField(0)
   Word word;
 
-  @HiveField(2)
+  @HiveField(1)
   DateTime dateToReview;
 
-  bool wordShowing = false;
+  bool wordShowing = true;
 
   changeWordShowing() {
     wordShowing = !wordShowing;
