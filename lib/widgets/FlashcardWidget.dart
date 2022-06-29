@@ -25,7 +25,7 @@ class FlashcardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    flashcard.wordShowing ? flashcard.word : flashcard.meaning,
+                    flashcard.wordShowing ? flashcard.word.word : flashcard.word.meaning,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 25,

@@ -13,7 +13,7 @@ class FlashcardsPage extends StatefulWidget {
 
 class _FlashcardsPageState extends State<FlashcardsPage> {
 
-  bool isWordCurrentlyShown = true;
+  Flashcard flashcard = Flashcard(word: Word(word: "Paraonomasia", meaning: "Play on words; punning"), dateToReview: DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,10 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
               onPressed: () {
                 // Changes the text on the flashcard to the opposite when pressed (word -> meaning and vise versa)
                 setState(() {
-                  isWordCurrentlyShown = !isWordCurrentlyShown;
+                  flashcard.changeWordShowing();
                 });
               },
-              child: FlashcardWidget(flashcard: Flashcard(word: Word(word: "Paraonomasia", meaning: "Play on words; punning"), dateToReview: DateTime.now(), wordShowing: isWordCurrentlyShown))
+              child: FlashcardWidget(flashcard: flashcard)
             ),
             SizedBox(height: 10),
             Row(

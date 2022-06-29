@@ -10,7 +10,11 @@ class Flashcard {
   @HiveField(2)
   DateTime dateToReview;
 
-  bool wordShowing;
+  bool wordShowing = false;
 
-  Flashcard({required this.word, required this.dateToReview, required this.wordShowing});
+  changeWordShowing() {
+    wordShowing = !wordShowing;
+  }
+
+  Flashcard({required this.word, required this.dateToReview});
 }
