@@ -6,11 +6,12 @@ import 'package:word_of_the_day/models/Flashcard.dart';
 
 class FlashcardService {
   late Box flashcardBox;
-  late List<Flashcard> flashcards;
+  late List<Flashcard> flashcardsForToday;
 
   FlashcardService() {
     flashcardBox = Hive.box("flashcardBox");
-    flashcards = getFlashcardsToShow();
+    if(flashcardBox.length < 2) addTestFlashcards();
+    flashcardsForToday = getFlashcardsToShow();
   }
 
   void addFlashcard(Word word, DateTime? reviewDate) {
@@ -20,8 +21,8 @@ class FlashcardService {
   // Changes the dateToReview variable
   void updateFlashcard(Word word, bool gotCorrect) {
     // Loops through the flashcards
-    for (var i = 0; i < flashcards.length; i++) {
-      Flashcard flashcard = flashcardBox.getAt(1);
+    for (var i = 0; i < flashcardsForToday.length; i++) {
+      Flashcard flashcard = flashcardBox.getAt(i);
 
       // If the flashcard is the one currently showing, change the reviewBy date
       if(flashcard.word.word == word.word) {
@@ -44,12 +45,26 @@ class FlashcardService {
     for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
 
-      if(flashcard.dateToReview.day == now.day && flashcard.dateToReview.month == now.month && flashcard.dateToReview.year == now.year) {
+      if(flashcard.dateToReview.day <= now.day && flashcard.dateToReview.month <= now.month && flashcard.dateToReview.year <= now.year) {
         flashcards.add(flashcard);
       }
     }
 
     return flashcards;
+  }
+
+  // For testing
+  void addTestFlashcards() {
+    addFlashcard(Word(word: "Zoetic", meaning: "Living; vital"), DateTime.now());
+    addFlashcard(Word(word: "Cacolet", meaning: "Military mule litter"), DateTime.now());
+    addFlashcard(Word(word: "Obeliscolychny", meaning: "Lighthouse"), DateTime.now());
+  }
+
+  // For testing
+  void printWords() {
+    for (var i = 0; i < flashcardBox.length; i++) {
+      print(flashcardBox.getAt(i).word.word);
+    }
   }
 
 }
