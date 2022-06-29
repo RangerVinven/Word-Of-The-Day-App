@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:word_of_the_day/widgets/FlashcardWidget.dart';
+import 'package:word_of_the_day/models/Word.dart';
 import 'package:word_of_the_day/models/Flashcard.dart';
+import 'package:word_of_the_day/widgets/FlashcardWidget.dart';
 
 class FlashcardsPage extends StatefulWidget {
   const FlashcardsPage({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                   isWordCurrentlyShown = !isWordCurrentlyShown;
                 });
               },
-              child: FlashcardWidget(flashcard: Flashcard(word: "Paraonomasia", meaning: "Play on words; punning", dateToReview: DateTime.now(), wordShowing: isWordCurrentlyShown))
+              child: FlashcardWidget(flashcard: Flashcard(word: Word(word: "Paraonomasia", meaning: "Play on words; punning"), dateToReview: DateTime.now(), wordShowing: isWordCurrentlyShown))
             ),
             SizedBox(height: 10),
             Row(
