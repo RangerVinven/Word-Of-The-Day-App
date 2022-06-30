@@ -9,5 +9,8 @@ class Word {
   @HiveField(1)
   String meaning;
 
-  Word({required this.word, required this.meaning});
+  @HiveField(2)
+  DateTime saveDate;
+
+  Word({required this.word, required this.meaning, required this.saveDate});
 }

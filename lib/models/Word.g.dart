@@ -19,17 +19,20 @@ class WordAdapter extends TypeAdapter<Word> {
     return Word(
       word: fields[0] as String,
       meaning: fields[1] as String,
+      saveDate: fields[2] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Word obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.word)
       ..writeByte(1)
-      ..write(obj.meaning);
+      ..write(obj.meaning)
+      ..writeByte(2)
+      ..write(obj.saveDate);
   }
 
   @override

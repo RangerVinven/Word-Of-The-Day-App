@@ -38,7 +38,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                   currentFlashcard.changeWordShowing();
                 });
               },
-              child: flashcardIndex <= flashcardService.flashcardsForToday.length ? FlashcardWidget(flashcard: flashcardService.flashcardsForToday[flashcardIndex]) : FlashcardWidget(flashcard: Flashcard(word: Word(word: "No words to show,\n come back later!", meaning: "No words to show,\n come back later!"), dateToReview: DateTime.now()))
+              child: flashcardIndex <= flashcardService.flashcardsForToday.length ? FlashcardWidget(flashcard: flashcardService.flashcardsForToday[flashcardIndex]) : FlashcardWidget(flashcard: Flashcard(word: Word(word: "No words to show,\n come back later!", meaning: "No words to show,\n come back later!", saveDate: DateTime.now()), dateToReview: DateTime.now()))
             ),
             const SizedBox(height: 10),
             Row(

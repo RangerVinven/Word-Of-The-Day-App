@@ -35,9 +35,19 @@ class _HomePageState extends State<HomePage> {
     HttpOverrides.global = MyHttpOverrides();
 
     // Checks if the word is saved, if not, then gets a new word
+    wotdService.clearBox();
     if(wotdService.wordSaved()) {
-      wordOfTheDay = wotdService.getWordAndMeaning();
-      loading = false;
+      // Checks if the WOTD needs to be changed (because it's a new day)
+      Word word = wotdService.getWordAndMeaning();
+      DateTime now = DateTime.now();
+
+      if(word.saveDate.day != now.day) {
+        loading = true;
+        getNewWord();  
+      } else {
+        wordOfTheDay = wotdService.getWordAndMeaning();
+        loading = false;
+      }
     } else {
       loading = true;
       getNewWord();
@@ -49,7 +59,7 @@ class _HomePageState extends State<HomePage> {
     var response = await get(Uri.parse("https://random-words-api.vercel.app/word"));
     List<dynamic> responseList = jsonDecode(response.body);
 
-    Word newWord = Word(word: responseList[0]["word"], meaning: responseList[0]["definition"]);
+    Word newWord = Word(word: responseList[0]["word"], meaning: responseList[0]["definition"], saveDate: DateTime.now());
 
     wordOfTheDay = newWord;
     wotdService.updateWord(newWord); // Updates the word in the database to make it persistant
@@ -76,15 +86,15 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     wordOfTheDay.word,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold
                     ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Text(
                     wordOfTheDay.meaning,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500
                     ),
@@ -102,8 +112,6 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text("Loading"),
-    );
+    return const Text("Loading");
   }
 }
