@@ -10,11 +10,14 @@ class Flashcard {
   @HiveField(1)
   DateTime dateToReview;
 
+  @HiveField(2)
+  int daysTillNextReview = 1;
+
   bool wordShowing = true;
 
   changeWordShowing() {
     wordShowing = !wordShowing;
   }
 
-  Flashcard({required this.word, required this.dateToReview});
+  Flashcard({required this.word, required this.dateToReview, required this.daysTillNextReview});
 }

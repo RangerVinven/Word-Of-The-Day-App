@@ -9,6 +9,8 @@ import 'package:http/http.dart';
 import 'package:word_of_the_day/models/Word.dart';
 import 'package:word_of_the_day/services/WordOfTheDayService.dart';
 
+import 'package:word_of_the_day/services/FlashcardService.dart';
+
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context){
@@ -27,11 +29,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   late WordOfTheDayService wotdService;
+  late FlashcardService flashcardService;
+
   late Word wordOfTheDay;
   late bool loading;
 
   _HomePageState() {
     wotdService = WordOfTheDayService();
+    flashcardService = FlashcardService();
+
     HttpOverrides.global = MyHttpOverrides();
 
     // Checks if the word is saved, if not, then gets a new word
@@ -65,6 +71,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       loading = false;
     });
+
+    flashcardService.addFlashcard(newWord, DateTime.now(), 1);
   }
 
   @override

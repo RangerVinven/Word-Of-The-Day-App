@@ -19,17 +19,20 @@ class FlashcardAdapter extends TypeAdapter<Flashcard> {
     return Flashcard(
       word: fields[0] as Word,
       dateToReview: fields[1] as DateTime,
+      daysTillNextReview: fields[2] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Flashcard obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.word)
       ..writeByte(1)
-      ..write(obj.dateToReview);
+      ..write(obj.dateToReview)
+      ..writeByte(2)
+      ..write(obj.daysTillNextReview);
   }
 
   @override

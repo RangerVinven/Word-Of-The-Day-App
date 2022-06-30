@@ -10,26 +10,25 @@ class FlashcardService {
 
   FlashcardService() {
     flashcardBox = Hive.box("flashcardBox");
-    if(flashcardBox.length < 2) addTestFlashcards();
     flashcardsForToday = getFlashcardsToShow();
   }
 
-  void addFlashcard(Word word, DateTime? reviewDate) {
-    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate ?? DateTime.now()));
+  void addFlashcard(Word word, DateTime? reviewDate, int daysTillNextReview) {
+    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate ?? DateTime.now(), daysTillNextReview: daysTillNextReview));
   }
 
   // Changes the dateToReview variable
   void updateFlashcard(Word word, bool gotCorrect) {
     // Loops through the flashcards
-    for (var i = 0; i < flashcardsForToday.length; i++) {
+    for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
 
       // If the flashcard is the one currently showing, change the reviewBy date
       if(flashcard.word.word == word.word) {
         if(gotCorrect) {
-          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.dateToReview.day*2)));
+          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), flashcard.daysTillNextReview*2);
         } else {
-          addFlashcard(word, flashcard.dateToReview.add(Duration(days: (flashcard.dateToReview.day/2).floor())));
+          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), (flashcard.daysTillNextReview/2).floor());
         }
 
         flashcardBox.deleteAt(i);
@@ -38,6 +37,9 @@ class FlashcardService {
         return;
       }
     }
+
+    print("Day*2: " + (DateTime.now().day*2).toString());
+    print("Duration: " + (DateTime.now().add(Duration(days: DateTime.now().day*2))).toString());
   }
 
   List<Flashcard> getFlashcardsToShow() {
@@ -47,7 +49,7 @@ class FlashcardService {
     for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
 
-      if(flashcard.dateToReview.day <= now.day && flashcard.dateToReview.month <= now.month && flashcard.dateToReview.year <= now.year) {
+      if(flashcard.dateToReview.day <= now.day || flashcard.dateToReview.month <= now.month || flashcard.dateToReview.year <= now.year) {
         flashcards.add(flashcard);
       }
     }
@@ -57,9 +59,9 @@ class FlashcardService {
 
   // For testing
   void addTestFlashcards() {
-    addFlashcard(Word(word: "Zoetic", meaning: "Living; vital", dayShown: DateTime.now().day), DateTime.now());
-    addFlashcard(Word(word: "Cacolet", meaning: "Military mule litter", dayShown: DateTime.now().day), DateTime.now());
-    addFlashcard(Word(word: "Obeliscolychny", meaning: "Lighthouse", dayShown: DateTime.now().day), DateTime.now());
+    addFlashcard(Word(word: "Zoetic", meaning: "Living; vital", dayShown: DateTime.now().day), DateTime.now(), 1);
+    addFlashcard(Word(word: "Cacolet", meaning: "Military mule litter", dayShown: DateTime.now().day), DateTime.now(), 1);
+    addFlashcard(Word(word: "Obeliscolychny", meaning: "Lighthouse", dayShown: DateTime.now().day), DateTime.now(), 1);
   }
 
   // For testing
@@ -67,6 +69,10 @@ class FlashcardService {
     for (var i = 0; i < flashcardBox.length; i++) {
       print(flashcardBox.getAt(i).word.word);
     }
+  }
+
+  void clearFlashcards() {
+    flashcardBox.clear();
   }
 
 }

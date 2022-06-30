@@ -15,14 +15,39 @@ class FlashcardsPage extends StatefulWidget {
 class _FlashcardsPageState extends State<FlashcardsPage> {
 
   late FlashcardService flashcardService;
-  int flashcardIndex = 0; // Which flashcard from the flashcards list in flashcardService is showing
+  late int flashcardIndex; // Which flashcard from the flashcards list in flashcardService is showing
   late Flashcard currentFlashcard;
 
   _FlashcardsPageState() {
     flashcardService = FlashcardService();
-    flashcardService.printWords();
+    flashcardService.clearFlashcards();
+    flashcardIndex = 0;
 
-    currentFlashcard = flashcardService.flashcardsForToday[flashcardIndex];
+
+    if(flashcardService.flashcardsForToday.length < 3) {
+      flashcardService.addTestFlashcards();
+    }
+
+    currentFlashcard = flashcardService.flashcardsForToday.isNotEmpty ? flashcardService.flashcardsForToday[flashcardIndex] : Flashcard(word: Word(word: "No more words for today", meaning: "No more words for today", dayShown: 1), dateToReview: DateTime.now(), daysTillNextReview: 1);
+  }
+
+  // For when the thumbs up or down
+  void submitAnswer(bool gotCorrect) {
+    flashcardService.updateFlashcard(currentFlashcard.word, gotCorrect);
+    setState(() {
+      flashcardIndex++;
+
+      print("Index: " + flashcardIndex.toString());
+      print(flashcardService.flashcardsForToday.length.toString());
+
+      // Checks if there's any more flashcards left
+      if(flashcardIndex < flashcardService.flashcardsForToday.length) {
+        currentFlashcard = flashcardService.flashcardsForToday[flashcardIndex];
+      } else {
+        print(flashcardService.flashcardsForToday.length);
+        currentFlashcard = Flashcard(word: Word(word: "No more words for today", meaning: "No more words for today", dayShown: 1), dateToReview: DateTime.now(), daysTillNextReview: 1);
+      }
+    });
   }
 
   @override
@@ -38,19 +63,14 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                   currentFlashcard.changeWordShowing();
                 });
               },
-              child: flashcardIndex <= flashcardService.flashcardsForToday.length ? FlashcardWidget(flashcard: flashcardService.flashcardsForToday[flashcardIndex]) : FlashcardWidget(flashcard: Flashcard(word: Word(word: "No words to show,\n come back later!", meaning: "No words to show,\n come back later!", dayShown: DateTime.now().day), dateToReview: DateTime.now()))
+              child: FlashcardWidget(flashcard: currentFlashcard)
             ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {
-                    setState(() {
-                      flashcardService.updateFlashcard(currentFlashcard.word, false);
-                      flashcardIndex++;
-                    });
-                  },
+                  onPressed: () {submitAnswer(false);},
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red)
                   ),
@@ -61,10 +81,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
                 ),
                 const SizedBox(width: 20),
                 TextButton(
-                  onPressed: () {
-                    flashcardService.updateFlashcard(currentFlashcard.word, true);
-                    flashcardIndex++;
-                  },
+                  onPressed: () {submitAnswer(true);},
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
                   ),
