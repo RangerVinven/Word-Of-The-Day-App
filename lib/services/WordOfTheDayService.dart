@@ -26,11 +26,13 @@ class WordOfTheDayService {
     return wordBox.length == 1 ? true : false;
   }
 
+  // Gets the saved word
   Word getWordAndMeaning() {
     var word = wordBox.get("word");
     return word;
   }
 
+  // Clears the box
   bool clearBox() {
     try {
       wordBox.clear();
@@ -38,6 +40,12 @@ class WordOfTheDayService {
     } catch(e) {
       return false;
     }
+  }
+
+  // Deletes the current box and creates a new one
+  void createNewBox() {
+    wordBox.deleteFromDisk();
+    wordBox = Hive.box("wordBox");
   }
 
 }

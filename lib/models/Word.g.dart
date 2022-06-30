@@ -19,7 +19,7 @@ class WordAdapter extends TypeAdapter<Word> {
     return Word(
       word: fields[0] as String,
       meaning: fields[1] as String,
-      saveDate: fields[2] as DateTime,
+      dayShown: fields[2] as dynamic,
     );
   }
 
@@ -32,7 +32,7 @@ class WordAdapter extends TypeAdapter<Word> {
       ..writeByte(1)
       ..write(obj.meaning)
       ..writeByte(2)
-      ..write(obj.saveDate);
+      ..write(obj.dayShown);
   }
 
   @override

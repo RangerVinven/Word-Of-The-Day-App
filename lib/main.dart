@@ -14,7 +14,7 @@ late Box box;
 
 void main() async {
   await Hive.initFlutter();
-  
+
   Hive.registerAdapter(WordAdapter());
   Hive.registerAdapter(FlashcardAdapter());
 

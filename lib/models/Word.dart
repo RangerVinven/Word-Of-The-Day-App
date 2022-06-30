@@ -10,7 +10,7 @@ class Word {
   String meaning;
 
   @HiveField(2)
-  DateTime saveDate;
+  var dayShown; // The day that the word was the word of the day
 
-  Word({required this.word, required this.meaning, required this.saveDate});
+  Word({required this.word, required this.meaning, required this.dayShown});
 }

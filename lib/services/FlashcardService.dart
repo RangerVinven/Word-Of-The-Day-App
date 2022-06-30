@@ -57,9 +57,9 @@ class FlashcardService {
 
   // For testing
   void addTestFlashcards() {
-    addFlashcard(Word(word: "Zoetic", meaning: "Living; vital", saveDate: DateTime.now()), DateTime.now());
-    addFlashcard(Word(word: "Cacolet", meaning: "Military mule litter", saveDate: DateTime.now()), DateTime.now());
-    addFlashcard(Word(word: "Obeliscolychny", meaning: "Lighthouse", saveDate: DateTime.now()), DateTime.now());
+    addFlashcard(Word(word: "Zoetic", meaning: "Living; vital", dayShown: DateTime.now().day), DateTime.now());
+    addFlashcard(Word(word: "Cacolet", meaning: "Military mule litter", dayShown: DateTime.now().day), DateTime.now());
+    addFlashcard(Word(word: "Obeliscolychny", meaning: "Lighthouse", dayShown: DateTime.now().day), DateTime.now());
   }
 
   // For testing

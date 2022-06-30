@@ -35,13 +35,12 @@ class _HomePageState extends State<HomePage> {
     HttpOverrides.global = MyHttpOverrides();
 
     // Checks if the word is saved, if not, then gets a new word
-    wotdService.clearBox();
     if(wotdService.wordSaved()) {
       // Checks if the WOTD needs to be changed (because it's a new day)
       Word word = wotdService.getWordAndMeaning();
       DateTime now = DateTime.now();
 
-      if(word.saveDate.day != now.day) {
+      if(word.dayShown != now.day) {
         loading = true;
         getNewWord();  
       } else {
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
     var response = await get(Uri.parse("https://random-words-api.vercel.app/word"));
     List<dynamic> responseList = jsonDecode(response.body);
 
-    Word newWord = Word(word: responseList[0]["word"], meaning: responseList[0]["definition"], saveDate: DateTime.now());
+    Word newWord = Word(word: responseList[0]["word"], meaning: responseList[0]["definition"], dayShown: DateTime.now().day);
 
     wordOfTheDay = newWord;
     wotdService.updateWord(newWord); // Updates the word in the database to make it persistant
