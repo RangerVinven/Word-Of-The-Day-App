@@ -14,7 +14,7 @@ class FlashcardService {
   }
 
   void addFlashcard(Word word, DateTime? reviewDate, int daysTillNextReview) {
-    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate ?? DateTime.now(), daysTillNextReview: daysTillNextReview));
+    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate != null ? reviewDate.add(Duration(days: daysTillNextReview)) : DateTime.now().add(Duration(days: daysTillNextReview)), daysTillNextReview: daysTillNextReview));
   }
 
   // Changes the dateToReview variable
@@ -32,25 +32,22 @@ class FlashcardService {
         }
 
         flashcardBox.deleteAt(i);
-        print(flashcard.word.word);
-
         return;
       }
     }
-
-    print("Day*2: " + (DateTime.now().day*2).toString());
-    print("Duration: " + (DateTime.now().add(Duration(days: DateTime.now().day*2))).toString());
   }
 
   List<Flashcard> getFlashcardsToShow() {
     List<Flashcard> flashcards = [];
     DateTime now = DateTime.now();
 
+    // Loops through the flashcards, adding the ones to review to the flashcards list
     for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
-
-      if(flashcard.dateToReview.day <= now.day || flashcard.dateToReview.month <= now.month || flashcard.dateToReview.year <= now.year) {
+      print(flashcard.word.word);
+      if(flashcard.dateToReview.day <= now.day || (flashcard.dateToReview.month <= now.month && flashcard.dateToReview.year <= now.year)) {
         flashcards.add(flashcard);
+        print(flashcard.word.word + " Added");
       }
     }
 

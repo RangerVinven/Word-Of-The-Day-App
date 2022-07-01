@@ -20,31 +20,26 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
 
   _FlashcardsPageState() {
     flashcardService = FlashcardService();
-    flashcardService.clearFlashcards();
     flashcardIndex = 0;
 
 
-    if(flashcardService.flashcardsForToday.length < 3) {
-      flashcardService.addTestFlashcards();
-    }
+    // if(flashcardService.flashcardsForToday.length < 3) {
+    //   flashcardService.addTestFlashcards();
+    // }
 
     currentFlashcard = flashcardService.flashcardsForToday.isNotEmpty ? flashcardService.flashcardsForToday[flashcardIndex] : Flashcard(word: Word(word: "No more words for today", meaning: "No more words for today", dayShown: 1), dateToReview: DateTime.now(), daysTillNextReview: 1);
   }
 
   // For when the thumbs up or down
   void submitAnswer(bool gotCorrect) {
-    flashcardService.updateFlashcard(currentFlashcard.word, gotCorrect);
+    flashcardService.updateFlashcard(currentFlashcard.word, gotCorrect); // Updates the flashcard's reviewDate
     setState(() {
       flashcardIndex++;
-
-      print("Index: " + flashcardIndex.toString());
-      print(flashcardService.flashcardsForToday.length.toString());
 
       // Checks if there's any more flashcards left
       if(flashcardIndex < flashcardService.flashcardsForToday.length) {
         currentFlashcard = flashcardService.flashcardsForToday[flashcardIndex];
       } else {
-        print(flashcardService.flashcardsForToday.length);
         currentFlashcard = Flashcard(word: Word(word: "No more words for today", meaning: "No more words for today", dayShown: 1), dateToReview: DateTime.now(), daysTillNextReview: 1);
       }
     });
