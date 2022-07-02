@@ -6,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart';
 
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'package:word_of_the_day/models/Word.dart';
 import 'package:word_of_the_day/services/WordOfTheDayService.dart';
 
@@ -119,6 +121,8 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Loading");
+    return Center(
+      child: LoadingAnimationWidget.threeArchedCircle(color: Colors.orange, size: 100),
+    );
   }
 }
