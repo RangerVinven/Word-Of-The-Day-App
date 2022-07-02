@@ -13,8 +13,8 @@ class FlashcardService {
     flashcardsForToday = getFlashcardsToShow();
   }
 
-  void addFlashcard(Word word, DateTime? reviewDate, int daysTillNextReview) {
-    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate != null ? reviewDate.add(Duration(days: daysTillNextReview)) : DateTime.now().add(Duration(days: daysTillNextReview)), daysTillNextReview: daysTillNextReview));
+  void addFlashcard(Word word, DateTime reviewDate, int daysTillNextReview) {
+    flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate.add(Duration(days: daysTillNextReview)), daysTillNextReview: daysTillNextReview));
   }
 
   // Changes the dateToReview variable
@@ -26,9 +26,9 @@ class FlashcardService {
       // If the flashcard is the one currently showing, change the reviewBy date
       if(flashcard.word.word == word.word) {
         if(gotCorrect) {
-          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), flashcard.daysTillNextReview*2);
+          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), (flashcard.daysTillNextReview*1.25).ceil());
         } else {
-          addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), (flashcard.daysTillNextReview/2).floor());
+          addFlashcard(word, flashcard.dateToReview.add(const Duration(days: 1)), 1);
         }
 
         flashcardBox.deleteAt(i);
@@ -45,7 +45,8 @@ class FlashcardService {
     for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
       print(flashcard.word.word);
-      if(flashcard.dateToReview.day <= now.day || (flashcard.dateToReview.month <= now.month && flashcard.dateToReview.year <= now.year)) {
+      print("Dates: " + flashcard.dateToReview.day.toString() + "/" + flashcard.dateToReview.month.toString() + "/" + flashcard.dateToReview.year.toString());
+      if(flashcard.dateToReview.isBefore(now) || flashcard.dateToReview.add(const Duration(days: 1)).isBefore(now)) {
         flashcards.add(flashcard);
         print(flashcard.word.word + " Added");
       }
