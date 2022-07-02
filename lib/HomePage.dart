@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
       loading = false;
     });
 
-    flashcardService.addFlashcard(newWord, DateTime.now(), 1);
+    flashcardService.addNewFlashcard(newWord);
   }
 
   @override

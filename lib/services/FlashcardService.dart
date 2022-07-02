@@ -13,6 +13,13 @@ class FlashcardService {
     flashcardsForToday = getFlashcardsToShow();
   }
 
+
+  // Adds a new flashcard (used for the new WOTD to add it to the flashcards of that day instead of the next day)
+  void addNewFlashcard(Word word) {
+    flashcardBox.add(Flashcard(word: word, dateToReview: DateTime.now(), daysTillNextReview: 1));
+  } 
+
+  // Adds a flashcard
   void addFlashcard(Word word, DateTime reviewDate, int daysTillNextReview) {
     flashcardBox.add(Flashcard(word: word, dateToReview: reviewDate.add(Duration(days: daysTillNextReview)), daysTillNextReview: daysTillNextReview));
   }
@@ -28,7 +35,7 @@ class FlashcardService {
         if(gotCorrect) {
           addFlashcard(word, flashcard.dateToReview.add(Duration(days: flashcard.daysTillNextReview)), (flashcard.daysTillNextReview*1.25).ceil());
         } else {
-          addFlashcard(word, flashcard.dateToReview.add(const Duration(days: 1)), 1);
+          addFlashcard(word, DateTime.now().add(const Duration(days: 1)), 1);
         }
 
         flashcardBox.deleteAt(i);
