@@ -11,29 +11,29 @@ class FlashcardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 2.25
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-              ),
-              width: 300,
-              height: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    flashcard.wordShowing ? flashcard.word.word : flashcard.word.meaning,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
-                ],
-              )
-            );
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 2.25
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      width: 300,
+      height: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            flashcard.wordShowing ? flashcard.word.word : flashcard.word.meaning,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 25,
+              fontWeight: FontWeight.bold
+            ),
+          )
+        ],
+      )
+    );
   }
 }

@@ -1,17 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart';
 
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'package:word_of_the_day/models/Word.dart';
-import 'package:word_of_the_day/services/WordOfTheDayService.dart';
-
 import 'package:word_of_the_day/services/FlashcardService.dart';
+import 'package:word_of_the_day/services/WordOfTheDayService.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

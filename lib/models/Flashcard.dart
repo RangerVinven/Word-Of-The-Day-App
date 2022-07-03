@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 import 'package:word_of_the_day/models/Word.dart';
 part 'Flashcard.g.dart';
 

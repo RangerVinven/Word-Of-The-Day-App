@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'Word.g.dart';
 
 @HiveType(typeId : 1)
