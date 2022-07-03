@@ -13,14 +13,6 @@ import 'package:word_of_the_day/services/WordOfTheDayService.dart';
 
 import 'package:word_of_the_day/services/FlashcardService.dart';
 
-class MyHttpOverrides extends HttpOverrides{
-  @override
-  HttpClient createHttpClient(SecurityContext? context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-  }
-}
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -40,8 +32,6 @@ class _HomePageState extends State<HomePage> {
     wotdService = WordOfTheDayService();
     flashcardService = FlashcardService();
 
-    HttpOverrides.global = MyHttpOverrides();
-
     // Checks if the word is saved, if not, then gets a new word
     if(wotdService.wordSaved()) {
       // Checks if the WOTD needs to be changed (because it's a new day)
@@ -50,7 +40,7 @@ class _HomePageState extends State<HomePage> {
 
       if(word.dayShown != now.day) {
         loading = true;
-        getNewWord();  
+        getNewWord();
       } else {
         wordOfTheDay = wotdService.getWordAndMeaning();
         loading = false;

@@ -51,11 +51,8 @@ class FlashcardService {
     // Loops through the flashcards, adding the ones to review to the flashcards list
     for (var i = 0; i < flashcardBox.length; i++) {
       Flashcard flashcard = flashcardBox.getAt(i);
-      print(flashcard.word.word);
-      print("Dates: " + flashcard.dateToReview.day.toString() + "/" + flashcard.dateToReview.month.toString() + "/" + flashcard.dateToReview.year.toString());
       if(flashcard.dateToReview.isBefore(now) || flashcard.dateToReview.add(const Duration(days: 1)).isBefore(now)) {
         flashcards.add(flashcard);
-        print(flashcard.word.word + " Added");
       }
     }
 
